@@ -31,12 +31,12 @@ Initial Setup
 
 A parsePlugin variable is defined globally (e.g. $window.parsePlugin).
 
-Once the device is ready (see: http://docs.phonegap.com/en/4.0.0/cordova_events_events.md.html#deviceready), call ```parsePlugin.initialize()```, you can pass your parse javascript key as an optional parameter, the plugin will use the app id and key provided during it's installation. This will register the device with Parse, you should see this reflected in your Parse control panel. After this runs you probably want to save the installationID somewhere, and perhaps subscribe the user to a few channels. Here is a contrived example.
+Once the device is ready (see: http://docs.phonegap.com/en/4.0.0/cordova_events_events.md.html#deviceready), call ```parsePlugin.initialize()```, initialize takes a json object as arg, optional "appJsVersion" option to persist in installation object (used to represent version of js bundle versus native app), the plugin will use the app id and key provided during it's installation. This will register the device with Parse, you should see this reflected in your Parse control panel. After this runs you probably want to save the installationID somewhere, and perhaps subscribe the user to a few channels. Here is a contrived example.
 
 (Note: When using Windows Phone, clientKey must be your .NET client key from Parse. So you will need to set this based on platform i.e. if( window.device.platform == "Win32NT"))
 
 ```
-parsePlugin.initialize({appJsVersion: parseJSAPIKey}, function() {
+parsePlugin.initialize({appJsVersion: jsBundleVersion}, function() {
 
 	parsePlugin.subscribe('SampleChannel', function() {
 
@@ -70,7 +70,7 @@ Alternatively, we can store the user in the installation table and use queries t
 
 ```
 // on sign in, add the user pointer to the Installation
-parsePlugin.initialize({appJsVersion: parseJSAPIKey}, function() {
+parsePlugin.initialize({appJsVersion: jsBundleVersion}, function() {
 
   parsePlugin.getInstallationObjectId( function(id) {
     // Success! You can now use Parse REST API to modify the Installation
@@ -109,7 +109,7 @@ Usage
 -----
 ```
 <script type="text/javascript">
-	parsePlugin.initialize({appJsVersion: parseJSAPIKey}, function() {
+	parsePlugin.initialize({appJsVersion: jsBundleVersion}, function() {
 		alert('success');
 	}, function(e) {
 		alert('error');
